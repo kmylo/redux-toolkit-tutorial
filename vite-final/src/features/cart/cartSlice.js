@@ -3,13 +3,25 @@ import axios from 'axios';
 import { openModal } from '../modal/modalSlice';
 
 const url = 'https://course-api.com/react-useReducer-cart-project';
+const mockedData = [{ "id": "rec1JZlfCIBOPdcT2", "title": "Samsung Galaxy S8", "price": "399.99", "img": "https://www.course-api.com/images/cart/phone-1.png", "amount": 1 }, { "id": "recB6qcHPxb62YJ75", "title": "google pixel", "price": "499.99", "img": "https://www.course-api.com/images/cart/phone-2.png", "amount": 1 }, { "id": "recdRxBsE14Rr2VuJ", "title": "Xiaomi Redmi Note 2", "price": "699.99", "img": "https://www.course-api.com/images/cart/phone-3.png", "amount": 1 }, { "id": "recwTo160XST3PIoW", "title": "Samsung Galaxy S7", "price": "599.99 ", "img": "https://www.course-api.com/images/cart/phone-4.png", "amount": 1 }]
 
 const initialState = {
   cartItems: [],
   amount: 4,
   total: 0,
   isLoading: true,
-};
+};   
+
+const fetchData = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(mockedData)
+    // resolve("foo");
+    // fetch("https://course-api.com/react-useReducer-cart-project")
+
+  }, 300);
+
+})
+
 
 export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
@@ -19,9 +31,11 @@ export const getCartItems = createAsyncThunk(
       // console.log(thunkAPI);
       // console.log(thunkAPI.getState());
       // thunkAPI.dispatch(openModal());
-      const resp = await axios(url);
+      // const resp = await axios(url);
 
-      return resp.data;
+      const resp = await fetchData()
+      // return resp.data;
+      return resp;
     } catch (error) {
       return thunkAPI.rejectWithValue('something went wrong');
     }
